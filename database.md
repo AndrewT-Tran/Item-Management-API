@@ -1,12 +1,8 @@
 
 # 1. Create a Database and User
 
-1. Open the PostgreSQL command line interface (psql) or use a database management tool like pgAdmin.
-
-2. Create a new database and user. Replace `your_database`, `postgres`, and `password` with your desired database name, username, and password.
-
 ```sql
-CREATE DATABASE project0;
+CREATE DATABASE projectDB;
 CREATE USER postgres WITH ENCRYPTED PASSWORD 'password';
 GRANT ALL PRIVILEGES ON DATABASE project0 TO postgres;
 ```
@@ -16,7 +12,7 @@ GRANT ALL PRIVILEGES ON DATABASE project0 TO postgres;
 Update the `application.properties` file in your Spring Boot application to connect to the PostgreSQL database.
 
 ```properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/project0
+spring.datasource.url=jdbc:postgresql://localhost:5432/projectDB?project0
 spring.datasource.username=postgres
 spring.datasource.password=password
 spring.jpa.hibernate.ddl-auto=update
@@ -26,9 +22,9 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 
 # 3. Create Tables and Seed Data
 
-Create the necessary tables and seed the database with initial data if needed. You can do this by creating a SQL script and executing it in the PostgreSQL database.
+Create the necessary tables and seed the database with initial data.
 
-#### Create `users` and `items` Tables
+### Create `users` and `items` Tables
 
 ```sql
 -- Makes Sure we using the right schema
@@ -51,36 +47,27 @@ CREATE TABLE IF NOT EXISTS items (
 );
 ```
 
-#### Insert Sample Data
+### SEED database with initial demo data
 
 ```sql
-
 -- Insert sample user
 INSERT INTO users (username, password, email)
 VALUES
    ('admin', 'password', 'admin@me.com'),
-    ('john_doe', 'password123', 'john.doe@example.com'),
-    ('jane_smith', 'securepassword', 'jane.smith@example.com'),
-    ('alice_jones', 'mypassword', 'alice.jones@example.com');
+    ('PGriffin', 'familyguy', 'Peter.Griffin@example.com'),
+    ('JSnow', 'Winter', 'Winter@iscomming.com'),
+    ('TKamado', 'Tanjaro', 'Tanjaro@FireBreathing.com');
 
 -- Insert sample items
 INSERT INTO items (name, description, status, user_id)
 VALUES
-    ('Laptop', 'A high-end gaming laptop', true, 1),  -- User with id 1 (admin)
-    ('Smartphone', 'Latest model with great features', true, 2),  -- User with id 2 (jane_smith)
-    ('Headphones', 'Noise-cancelling over-ear headphones', false, 1),  -- User with id 1 (admin)
-    ('Monitor', '27-inch 4K monitor', true, 3);  -- User with id 3 (alice_jones)
-
-
+    ('Laptop', 'A high-end gaming laptop', true, 1), 
+    ('Smartphone', 'Latest model with great features', true, 2),)
+    ('Headphones', 'Noise-cancelling over-ear headphones', false, 1),
+    ('Monitor', '27-inch 4K monitor', true, 3);
 ```
 
-# 4. Verify the Database Connection
-
-Run your Spring Boot application and verify that it connects to the PostgreSQL database and creates the necessary tables. You can use a tool like pgAdmin to inspect the database and ensure that the tables and data are correctly set up.
-
-# 5. Test the Application
-
-Use Postman or any other HTTP client to test the endpoints of your application.
+# 4 Test Endpoints
 
 - **Register a User:** `POST http://localhost:8080/users/register`
 
