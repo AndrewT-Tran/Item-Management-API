@@ -1,112 +1,114 @@
-- **Register a User:** `POST http://localhost:8080/users/register`
+# API Endpoints
 
-#### *curl POST request*
+## User Operations
 
-```sh
-curl -X POST http://localhost:8080/users/register \
--H "Content-Type: application/json" \
--d '{
-  "email": "test@example.com",
-  "username": "testuser",
-  "password": "password"
-}'
-```
-
-#### *JSON body for POST*
-
-```json
-{
-  "email": "test@example.com",
-  "username": "testuser",
-  "password": "password"
-}
-```
-
-- **Login a User:** `POST http://localhost:8080/users/login`
-
-#### *curl POST request*
-
-```sh
-curl -X POST http://localhost:8080/users/login \
--H "Content-Type: application/json" \
--d '{
-  "username": "testuser",
-  "password": "password"
-}'
-```
-
-#### *JSON body for POST*
-
-```json
-{
-  "username": "testuser",
-  "password": "password"
-}
-```
-
-- **Create an Item:** `POST http://localhost:8080/items`
-
-#### *JSON body for POST*
-
-```json
-
-{
-    "name": "PlayStation 6",
-    "description": "This is a big hit",
-    "status": true,
-    "user": {
-        "id": 1
+#### Register a User
+- **Endpoint:** `POST /users/register`
+- **Request Example (cURL):**
+    ```sh
+    curl -X POST http://localhost:8080/users/register \
+    -H "Content-Type: application/json" \
+    -d '{
+      "email": "test@example.com",
+      "username": "testuser",
+      "password": "password"
+    }'
+    ```
+- **Request Body:**
+    ```json
+    {
+      "email": "test@example.com",
+      "username": "testuser",
+      "password": "password"
     }
-}
-```
+    ```
 
-#### *curl POST request*
-
-```sh
-curl -X POST http://localhost:8080/items \
--H "Content-Type: application/json" \
--d '{
-  "name": "Sample Item",
-  "description": "This is a sample item",
-  "status": true,
-  "user": {"id": 1}
-}'
-```
-
-- **View All Items:** `GET http://localhost:8080/items`
-
-  - [http://localhost:8080/items](http://localhost:8080/items)
-
-- **View Item by ID:** `GET http://localhost:8080/items/{id}`
-- **Update Item:** `PUT http://localhost:8080/items/{id}`
-
-#### *curl PUT request*
-
-```sh
-curl -X PUT http://localhost:8080/items/1 \
--H "Content-Type: application/json" \
--d '{
-  "name": "Updated Item Name",
-  "description": "Updated Description",
-  "status": true,
-  "user": {
-    "id": 1
-  }
-}'
-```
-
-#### *JSON body for PUT request*
-
-```json
-{
-    "name": "Updated Item Name",
-    "description": "Updated Description",
-    "status": true,
-    "user": {
-        "id": 1
+#### Login a User
+- **Endpoint:** `POST /users/login`
+- **Request Example (cURL):**
+    ```sh
+    curl -X POST http://localhost:8080/users/login \
+    -H "Content-Type: application/json" \
+    -d '{
+      "username": "testuser",
+      "password": "password"
+    }'
+    ```
+- **Request Body:**
+    ```json
+    {
+      "username": "testuser",
+      "password": "password"
     }
-}
-```
+    ```
 
-- **Delete Item:** `DELETE http://localhost:8080/items/{id}`
-- **View Items by User:** `GET http://localhost:8080/items/user/{userId}`
+## Item Operations
+
+#### Create an Item
+- **Endpoint:** `POST /items`
+- **Request Example (cURL):**
+    ```sh
+    curl -X POST http://localhost:8080/items \
+    -H "Content-Type: application/json" \
+    -d '{
+      "name": "Sample Item",
+      "description": "This is a sample item",
+      "status": true,
+      "user": {"id": 1}
+    }'
+    ```
+- **Request Body:**
+    ```json
+    {
+      "name": "Sample Item",
+      "description": "This is a sample item",
+      "status": true,
+      "user": {
+        "id": 1
+      }
+    }
+    ```
+
+#### View All Items
+- **Endpoint:** `GET /items`
+- **URL:** [http://localhost:8080/items](http://localhost:8080/items)
+
+#### View Item by ID
+- **Endpoint:** `GET /items/{id}`
+
+#### Update Item
+- **Endpoint:** `PUT /items/{id}`
+- **Request Example (cURL):**
+    ```sh
+    curl -X PUT http://localhost:8080/items/1 \
+    -H "Content-Type: application/json" \
+    -d '{
+      "name": "Updated Item Name",
+      "description": "Updated Description",
+      "status": true,
+      "user": {
+        "id": 1
+      }
+    }'
+    ```
+- **Request Body:**
+    ```json
+    {
+      "name": "Updated Item Name",
+      "description": "Updated Description",
+      "status": true,
+      "user": {
+        "id": 1
+      }
+    }
+    ```
+
+#### Delete Item
+- **Endpoint:** `DELETE /items/{id}`
+
+#### View Items by User
+- **Endpoint:** `GET /items/user/{userId}`
+
+---
+
+Feel free to adjust as needed!
