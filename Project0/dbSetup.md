@@ -50,10 +50,10 @@ CREATE TABLE IF NOT EXISTS items (
 ### SEED database with initial demo data
 
 ```sql
--- Insert sample user
+-- Insert sample users
 INSERT INTO users (username, password, email)
 VALUES
-   ('admin', 'password', 'admin@me.com'),
+    ('admin', 'password', 'admin@me.com'),
     ('PGriffin', 'familyguy', 'Peter.Griffin@example.com'),
     ('JSnow', 'Winter', 'Winter@iscomming.com'),
     ('TKamado', 'Tanjaro', 'Tanjaro@FireBreathing.com');
@@ -62,10 +62,11 @@ VALUES
 INSERT INTO items (name, description, status, user_id)
 VALUES
     ('Laptop', 'A high-end gaming laptop', true, 1),
-    ('Smartphone', 'Latest model with great features', true, 2),)
+    ('Smartphone', 'Latest model with great features', true, 2),
     ('Headphones', 'Noise-cancelling over-ear headphones', false, 1),
     ('Monitor', '27-inch 4K monitor', true, 3);
-```
+
+  ```
 
 # 4 Test Endpoints
 
