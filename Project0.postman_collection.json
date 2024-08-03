@@ -1,0 +1,1042 @@
+{
+	"info": {
+		"_postman_id": "88f60148-d45c-4c65-9b14-70bf774a0aae",
+		"name": "Project0",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28496819"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \"password\": \"password\",\r\n    \"username\": \"demo\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"login"
+							]
+						},
+						"description": "### Login User\n\nThis endpoint allows the user to log in by providing their credentials.\n\n**Request Body**\n\n- `email` (string): The email address of the user.\n    \n- `password` (string): The password for the user's account.\n    \n\n**Response**\n\n- `id` (number): The unique identifier of the user.\n    \n- `email` (string): The email address of the user.\n    \n- `password` (string): The password of the user's account.\n    \n- `username` (string): The username of the user.\n    \n\nExample Response:\n\n``` json\n{\n    \"id\": 0,\n    \"email\": \"\",\n    \"password\": \"\",\n    \"username\": \"\"\n}\n\n ```"
+					},
+					"response": [
+						{
+							"name": "Login Example",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"username\":\"demo\",\r\n\"password\":\"password\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/users/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 03 Aug 2024 18:00:23 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 5,\n    \"email\": \"demo@example.com\",\n    \"password\": \"password\",\n    \"username\": \"demo\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"test34@example.com\",\r\n    \"username\": \"demo23\",\r\n    \"password\": \"pass43word\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"register"
+							]
+						},
+						"description": "### Register User\n\nThis endpoint allows users to register by providing their email, username, and password.\n\n#### Request Body\n\n- `email` (string, required): The email of the user.\n    \n- `username` (string, required): The username chosen by the user.\n    \n- `password` (string, required): The password for the user account.\n    \n\n#### Response\n\nUpon successful registration, the server responds with a status code of 201 and a JSON object containing the registered user's details, including:\n\n- `id` (integer): The unique identifier for the registered user.\n    \n- `email` (string): The email provided during registration.\n    \n- `username` (string): The username chosen during registration.\n    \n- `password` (string): The password provided during registration.\n    \n\nExample response:\n\n``` json\n{\n    \"email\": \"test@example.com\",\n    \"username\": \"AndrewT\",\n    \"password\": \"password\"\n}\n\n ```"
+					},
+					"response": [
+						{
+							"name": "Register User",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"test@example.com\",\r\n    \"username\": \"AndrewT\",\r\n    \"password\": \"password\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/users/register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 03 Aug 2024 18:23:17 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 6,\n    \"email\": \"test@example.com\",\n    \"password\": \"password\",\n    \"username\": \"AndrewT\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Items",
+			"item": [
+				{
+					"name": "Create Item",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Store the itemId from the response in a variable\r",
+									"var itemId = pm.response.json().id;\r",
+									"pm.globals.set(\"itemId\", itemId);",
+									"pm.test(\"Response status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData).to.have.property('id');",
+									"    pm.expect(responseData).to.have.property('name');",
+									"    pm.expect(responseData).to.have.property('description');",
+									"    pm.expect(responseData).to.have.property('status');",
+									"    pm.expect(responseData).to.have.property('user');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Name is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.name).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Name should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"User object is present in the response and contains expected properties\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.user).to.exist;",
+									"    pm.expect(responseData.user).to.have.property('id').that.is.a('number');",
+									"    pm.expect(responseData.user).to.have.property('email').that.is.a('null');",
+									"    pm.expect(responseData.user).to.have.property('password').that.is.a('null');",
+									"    pm.expect(responseData.user).to.have.property('username').that.is.a('null');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Description is a non-empty string\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.description).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Description should not be empty\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n      \"name\": \"Sample Item\",\r\n      \"description\": \"This is a sample item\",\r\n      \"status\": true,\r\n      \"user\": {\r\n        \"id\": 1\r\n      }\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/items",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"items"
+							]
+						},
+						"description": "### Create a New Item\n\nThis endpoint allows you to create a new item.\n\n#### Request Body\n\n- `name` (string, required): The name of the item.\n    \n- `description` (string, required): The description of the item.\n    \n- `status` (boolean, required): The status of the item.\n    \n- `user` (object, required): The user associated with the item, containing the following properties:\n    \n    - `id` (number, required): The user ID.\n        \n\n#### Response (JSON Schema)\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"id\": {\n      \"type\": \"number\"\n    },\n    \"name\": {\n      \"type\": \"string\"\n    },\n    \"description\": {\n      \"type\": \"string\"\n    },\n    \"status\": {\n      \"type\": \"boolean\"\n    },\n    \"user\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"id\": {\n          \"type\": \"number\"\n        },\n        \"email\": {\n          \"type\": \"null\"\n        },\n        \"password\": {\n          \"type\": \"null\"\n        },\n        \"username\": {\n          \"type\": \"null\"\n        }\n      },\n      \"required\": [\"id\"]\n    }\n  },\n  \"required\": [\"id\", \"name\", \"description\", \"status\", \"user\"]\n}\n\n ```"
+					},
+					"response": [
+						{
+							"name": "Create Item",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "    {\r\n      \"name\": \"Sample Item\",\r\n      \"description\": \"This is a sample item\",\r\n      \"status\": true,\r\n      \"user\": {\r\n        \"id\": 1\r\n      }\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/items",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"items"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Create Item",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "    {\r\n      \"name\": \"Sample Item\",\r\n      \"description\": \"This is a sample item\",\r\n      \"status\": true,\r\n      \"user\": {\r\n        \"id\": 1\r\n      }\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/items",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"items"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 03 Aug 2024 18:06:09 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 8,\n    \"name\": \"Sample Item\",\n    \"description\": \"This is a sample item\",\n    \"status\": true,\n    \"user\": {\n        \"id\": 1,\n        \"email\": null,\n        \"password\": null,\n        \"username\": null\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Item by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.equal(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Content-Type header is application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Id field in the response should exist and be a number\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.have.property('id').that.is.a('number');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Name field should be a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.name).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Name should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Description field is a non-empty string\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.description).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Description should not be empty\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/items/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"items",
+								"4"
+							]
+						},
+						"description": "The endpoint retrieves information about a specific item with the ID of 1. The response returned is a JSON object with the following schema:\n\n``` json\n{\n    \"id\": 1,\n    \"name\": \"Laptop\",\n    \"description\": \"A high-end gaming laptop\",\n    \"status\": true,\n    \"user\": {\n        \"id\": 1,\n        \"email\": \"admin@me.com\",\n        \"password\": \"password\",\n        \"username\": \"admin\"\n    }\n}\n\n ```"
+					},
+					"response": [
+						{
+							"name": "Get Item by ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/items/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"items",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 03 Aug 2024 18:07:50 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"name\": \"Laptop\",\n    \"description\": \"A high-end gaming laptop\",\n    \"status\": true,\n    \"user\": {\n        \"id\": 1,\n        \"email\": \"admin@me.com\",\n        \"password\": \"password\",\n        \"username\": \"admin\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "UpdateByID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/items/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"items",
+								"1"
+							]
+						},
+						"description": "# Update Item Details\n\nThis endpoint allows the client to update the details of a specific item identified by the in the URL.\n\n## Request\n\n- Method: PUT\n    \n- URL: `http://localhost:8080/items/1`\n    \n\n### Request Body\n\nThe request body should contain the updated details of the item in JSON format.\n\nExample:\n\n``` json\n{\n  \"name\": \"Updated Item Name\",\n  \"description\": \"Updated item description\",\n  \"price\": 25.99\n}\n## Response\nThe response will be in JSON format and will contain the updated details of the item, following the JSON schema provided below.\n### JSON Schema for Response\n```json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"id\": {\n      \"type\": \"integer\"\n    },\n    \"name\": {\n      \"type\": \"string\"\n    },\n    \"description\": {\n      \"type\": \"string\"\n    },\n    \"price\": {\n      \"type\": \"number\"\n    }\n  }\n}\n\n ```\n\nThis endpoint allows the client to update the details of a specific item identified by the item ID in the URL.\n\n### Request\n\n- Method: PUT\n    \n- URL: `http://localhost:8080/items/4`\n    \n\n#### Request Body\n\nThe request body should contain the updated details of the item in JSON format.\n\nExample:\n\n``` json\n{\n  \"name\": \"Updated Item Name\",\n  \"description\": \"Updated item description\",\n  \"price\": 25.99\n}\n\n ```\n\n### Response\n\nThe response will be in JSON format and will contain the updated details of the item, following the JSON schema provided below.\n\n#### JSON Schema for Response\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"id\": {\n      \"type\": \"integer\"\n    },\n    \"name\": {\n      \"type\": \"string\"\n    },\n    \"description\": {\n      \"type\": \"string\"\n    },\n    \"price\": {\n      \"type\": \"number\"\n    }\n  }\n}\n\n ```"
+					},
+					"response": [
+						{
+							"name": "UpdateByID",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Updated Item Name\",\n  \"description\": \"Updated Description\",\n  \"status\": true,\n  \"user\": {\n    \"id\": 3\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/items/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"items",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 03 Aug 2024 18:41:46 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 3,\n    \"name\": \"Updated Item Name\",\n    \"description\": \"Updated Description\",\n    \"status\": true,\n    \"user\": {\n        \"id\": 3,\n        \"email\": \"Winter@iscomming.com\",\n        \"password\": \"Winter\",\n        \"username\": \"JSnow\"\n    }\n}"
+						},
+						{
+							"name": "UpdateByID",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Updated Item Name\",\n  \"description\": \"Updated Description\",\n  \"status\": true,\n  \"user\": {\n    \"id\": 3\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/items/4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"items",
+										"4"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 03 Aug 2024 18:42:01 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 4,\n    \"name\": \"Updated Item Name\",\n    \"description\": \"Updated Description\",\n    \"status\": true,\n    \"user\": {\n        \"id\": 3,\n        \"email\": \"Winter@iscomming.com\",\n        \"password\": \"Winter\",\n        \"username\": \"JSnow\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Test to verify that the item ID is required in the request URL\r",
+									"pm.test(\"Item ID is required in the request URL\", function () {\r",
+									"    pm.expect(pm.request.url.toString()).to.match(/\\/items\\/\\d+$/);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test to verify that the item ID is required in the request URL\r",
+									"pm.test(\"Item ID is required in the request URL\", function () {\r",
+									"    pm.expect(pm.request.url.toString()).to.match(/\\/items\\/\\d+$/);\r",
+									"});\r",
+									"// Test to validate the JSON schema of the response data\r",
+									"pm.test(\"Validate JSON schema of the response data\", function () {\r",
+									"  var schema = {\r",
+									"    type: \"object\",\r",
+									"    properties: {},\r",
+									"    required: [],\r",
+									"  };\r",
+									"\r",
+									"  pm.response.to.have.header(\"Content-Type\", \"text/xml\"); // Added test to validate Content-Type header\r",
+									"  pm.expect(pm.response.text()).to.equal(\"null\"); // Added test to validate the response body\r",
+									"  var response = xml2Json(pm.response.text());\r",
+									"  pm.expect(tv4.validate(response, schema)).to.be.true;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/items/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"items",
+								"2"
+							]
+						},
+						"description": "### Delete Item\n\nThis endpoint is used to delete an item.\n\n#### Request\n\n- Method: DELETE\n    \n- URL: `http://localhost:8080/items/`\n    \n\n#### Response\n\nThe response for this request is a JSON schema describing the structure of the response data.\n\nThis endpoint is used to delete an item.\n\n## Request\n\n- Method: DELETE\n    \n- URL: `http://localhost:8080/items/`\n    \n- url param: ITEM ID\n    \n\n## Response\n\nThe response for this request is a JSON schema that describes the structure of the response body."
+					},
+					"response": [
+						{
+							"name": "Delete",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/items/5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"items",
+										"5"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Delete",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/items/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"items",
+										"1"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 03 Aug 2024 18:28:30 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "GetByUserID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"The response has the required fields - id, name, description, status, and user\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(item) {",
+									"        pm.expect(item).to.have.property('id');",
+									"        pm.expect(item).to.have.property('name');",
+									"        pm.expect(item).to.have.property('description');",
+									"        pm.expect(item).to.have.property('status');",
+									"        pm.expect(item).to.have.property('user');",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Email is in a valid email format\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    responseData.forEach(function(item) {",
+									"        pm.expect(item.user.email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/, \"Email format is invalid\");",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Password is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    responseData.forEach(function(item) {",
+									"        pm.expect(item.user.password).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Password should not be empty\");",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Username is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(item) {",
+									"        pm.expect(item.user.username).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Username should not be empty\");",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/items/user/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"items",
+								"user",
+								"2"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						},
+						"description": "### Get User Items\n\nThis endpoint retrieves the items associated with a specific user.\n\n#### Request\n\n- Method: GET\n    \n- URL: `http://localhost:8080/items/user/1`\n    \n\n#### Response\n\n- Status: 200\n    \n- Content-Type: application/json\n    \n- \\[ { \"id\": 0, \"name\": \"\", \"description\": \"\", \"status\": true, \"user\": { \"id\": 0, \"email\": \"\", \"password\": \"\", \"username\": \"\" } }\\]"
+					},
+					"response": [
+						{
+							"name": "GetByUserID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/items/user/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"items",
+										"user",
+										"2"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Get All Items",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.equal(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required Content-Type header of 'application/json'\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"The response should be a non-empty array of items\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array').that.is.not.empty;",
+									"});",
+									"",
+									"pm.test(\"Each item in the response array should have 'id', 'name', 'description', and 'status' fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    responseData.forEach(function(item) {",
+									"        pm.expect(item).to.have.property('id');",
+									"        pm.expect(item).to.have.property('name');",
+									"        pm.expect(item).to.have.property('description');",
+									"        pm.expect(item).to.have.property('status');",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"The response should be a non-empty array\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array').that.is.not.empty;",
+									"});",
+									"",
+									"pm.test(\"Validate the 'user' object in each item\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    responseData.forEach(function(item) {",
+									"        pm.expect(item.user).to.be.an('object').that.includes.all.keys('id', 'email', 'password', 'username');",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Each item's id should be a non-negative integer\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(item => {",
+									"        pm.expect(item.id).to.be.a('number').and.to.satisfy(id => id >= 0, \"ID should be a non-negative integer\");",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/items",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"items"
+							]
+						},
+						"description": "### Get Items\n\nThis endpoint makes an HTTP GET request to retrieve a list of items.\n\n#### Request Body\n\nThis request does not require a request body.\n\n#### Response Body\n\n- Status: 200\n    \n- Content-Type: application/json\n    \n\nThe response will include an array of items, where each item object contains the following keys:\n\n- \"id\": The unique identifier for the item.\n    \n- \"name\": The name of the item.\n    \n- \"description\": The description of the item.\n    \n- \"status\": The status of the item.\n    \n- \"user\": An object containing the details of the user associated with the item, including \"id\", \"email\", \"password\", and \"username\"."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
