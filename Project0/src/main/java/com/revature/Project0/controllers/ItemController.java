@@ -1,22 +1,13 @@
 package com.revature.Project0.controllers;
 
-import java.util.List;
-
+import com.revature.Project0.models.Item;
+import com.revature.Project0.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.revature.Project0.models.Item;
-import com.revature.Project0.services.ItemService;
+import java.util.List;
 
 @RestController
 // The @RestController Indicates that this class is REST controller
@@ -25,7 +16,7 @@ import com.revature.Project0.services.ItemService;
 @RequestMapping("/items") // sets the base url path for all methods inm this controller
 
 @CrossOrigin // allows cross-origin requests, which is we need if the API is accessed from a
-             // diff domain or port
+// diff domain or port
 public class ItemController {
 
     private final ItemService itemService;
