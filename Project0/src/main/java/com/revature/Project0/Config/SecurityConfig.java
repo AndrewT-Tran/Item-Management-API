@@ -18,10 +18,12 @@ public class SecurityConfig {
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/user/**").hasRole("USER")
                         .anyRequest().permitAll())
-                .httpBasic(withDefaults()) // Basic authentication
-                .csrf(csrf -> csrf.disable()) // Disable CSRF protection
-                .formLogin(withDefaults()) // Default form login
-                .logout(withDefaults()); // Default logout
+                .httpBasic() // Basic authentication
+                .and()
+                .csrf().disable() // Disable CSRF protection
+                .formLogin() // Default form login
+                .and()
+                .logout(); // Default logout
 
         return http.build();
     }
