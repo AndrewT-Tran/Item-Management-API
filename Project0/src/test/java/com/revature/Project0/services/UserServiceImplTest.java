@@ -48,9 +48,7 @@ public class UserServiceImplTest {
 
         when(userRepo.findByUsername("existingUser")).thenReturn(user);
 
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            userService.register(user);
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> userService.register(user));
 
         assertEquals("Username already exists", exception.getMessage());
     }
