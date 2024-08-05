@@ -1,11 +1,12 @@
 package com.revature.Project0.services;
 
-import com.revature.Project0.models.Item;
-import com.revature.Project0.repositories.ItemRepo;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.revature.Project0.models.Item;
+import com.revature.Project0.repositories.ItemRepo;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -48,5 +49,14 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<Item> getItemsByUserId(Long userId) {
         return itemRepo.findByUserId(userId);
+    }
+
+    @Override
+    public List<Item> getItemsForUser(Long userId, boolean isAdmin) {
+        if (isAdmin) {
+            return getAllItems();
+        } else {
+            return getItemsByUserId(userId);
+        }
     }
 }

@@ -1,24 +1,34 @@
 package com.revature.Project0.services;
 
-import com.revature.Project0.models.User;
-import com.revature.Project0.repositories.UserRepo;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.mockito.ArgumentMatchers.any;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import org.mockito.MockitoAnnotations;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.revature.Project0.models.User;
+import com.revature.Project0.repositories.UserRepo;
 
 public class UserServiceImplTest {
 
     @Mock
     private UserRepo userRepo;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
     @InjectMocks
     private UserServiceImpl userService;
+
+    private static final String ENCODED_PASSWORD = "$2a$10$GWF7MmfXC122m.HLWwl.huX9UcZDhoqlqq/uoGDj7WIFvaDO6UIhy";
 
     @BeforeEach
     void setUp() {
@@ -30,14 +40,24 @@ public class UserServiceImplTest {
         User user = new User();
         user.setUsername("newUser");
         user.setPassword("newPass");
+        user.setRole("USER");
 
-        when(userRepo.findByUsername("newUser")).thenReturn(null);
-        when(userRepo.save(any(User.class))).thenReturn(user);
+        when(userRepo.findByUsername("newUser")).thenReturn(Optional.empty());
+        when(passwordEncoder.encode("newPass")).thenReturn(ENCODED_PASSWORD);
+
+        // Ensure the user returned by the save method has the encoded password
+        User savedUser = new User();
+        savedUser.setUsername("newUser");
+        savedUser.setPassword(ENCODED_PASSWORD);
+        savedUser.setRole("USER");
+        when(userRepo.save(any(User.class))).thenReturn(savedUser);
 
         User registeredUser = userService.register(user);
 
         assertNotNull(registeredUser);
         assertEquals("newUser", registeredUser.getUsername());
+        assertEquals(ENCODED_PASSWORD, registeredUser.getPassword());
+        assertEquals("USER", registeredUser.getRole());
     }
 
     @Test
@@ -46,7 +66,7 @@ public class UserServiceImplTest {
         user.setUsername("existingUser");
         user.setPassword("password");
 
-        when(userRepo.findByUsername("existingUser")).thenReturn(user);
+        when(userRepo.findByUsername("existingUser")).thenReturn(Optional.of(user));
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> userService.register(user));
 
@@ -57,35 +77,42 @@ public class UserServiceImplTest {
     void testLoginSuccess() {
         User user = new User();
         user.setUsername("testUser");
-        user.setPassword("testPass");
+        user.setPassword(ENCODED_PASSWORD);
+        user.setRole("USER");
 
-        when(userRepo.findByUsername("testUser")).thenReturn(user);
+        when(userRepo.findByUsername("testUser")).thenReturn(Optional.of(user));
+        when(passwordEncoder.matches("testPass", ENCODED_PASSWORD)).thenReturn(true);
 
         User loggedInUser = userService.login("testUser", "testPass");
 
         assertNotNull(loggedInUser);
         assertEquals("testUser", loggedInUser.getUsername());
+        assertEquals("USER", loggedInUser.getRole());
     }
 
     @Test
     void testLoginInvalidPassword() {
         User user = new User();
         user.setUsername("testUser");
-        user.setPassword("testPass");
+        user.setPassword(ENCODED_PASSWORD);
+        user.setRole("USER");
 
-        when(userRepo.findByUsername("testUser")).thenReturn(user);
+        when(userRepo.findByUsername("testUser")).thenReturn(Optional.of(user));
+        when(passwordEncoder.matches("wrongPass", ENCODED_PASSWORD)).thenReturn(false);
 
-        User loggedInUser = userService.login("testUser", "wrongPass");
+        Exception exception = assertThrows(IllegalArgumentException.class,
+                () -> userService.login("testUser", "wrongPass"));
 
-        assertNull(loggedInUser);
+        assertEquals("Invalid username or password", exception.getMessage());
     }
 
     @Test
     void testLoginUserNotFound() {
-        when(userRepo.findByUsername("nonExistentUser")).thenReturn(null);
+        when(userRepo.findByUsername("nonExistentUser")).thenReturn(Optional.empty());
 
-        User loggedInUser = userService.login("nonExistentUser", "password");
+        Exception exception = assertThrows(IllegalArgumentException.class,
+                () -> userService.login("nonExistentUser", "password"));
 
-        assertNull(loggedInUser);
+        assertEquals("Invalid username or password", exception.getMessage());
     }
 }

@@ -1,8 +1,8 @@
 package com.revature.Project0.services;
 
-import com.revature.Project0.models.Item;
-
 import java.util.List;
+
+import com.revature.Project0.models.Item;
 
 public interface ItemService {
     Item addItem(Item item);
@@ -16,4 +16,6 @@ public interface ItemService {
     void deleteItem(Long id);
 
     List<Item> getItemsByUserId(Long userId);
+
+    List<Item> getItemsForUser(Long userId, boolean isAdmin);
 }

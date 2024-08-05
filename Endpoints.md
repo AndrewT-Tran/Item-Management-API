@@ -2,11 +2,11 @@
 
 ## User Operations
 
-#### Register a User
-- **Endpoint:** `POST /users/register`
+### Register a User
+- **Endpoint:** `POST /api/users/register`
 - **Request Example (cURL):**
     ```sh
-    curl -X POST http://localhost:8080/users/register \
+    curl -X POST http://localhost:8080/api/users/register \
     -H "Content-Type: application/json" \
     -d '{
       "email": "me@yaboy.com",
@@ -17,17 +17,17 @@
 - **Request Body:**
     ```json
     {
-      "email": "test@example.com",
-      "username": "testuser",
+      "email": "me@yaboy.com",
+      "username": "admin",
       "password": "password"
     }
     ```
 
-#### Login a User
-- **Endpoint:** `POST /users/login`
+### Login a User
+- **Endpoint:** `POST /api/users/login`
 - **Request Example (cURL):**
     ```sh
-    curl -X POST http://localhost:8080/users/login \
+    curl -X POST http://localhost:8080/api/users/login \
     -H "Content-Type: application/json" \
     -d '{
       "username": "testuser",
@@ -44,7 +44,7 @@
 
 ## Item Operations
 
-#### Create an Item
+### Create an Item
 - **Endpoint:** `POST /items`
 - **Request Example (cURL):**
     ```sh
@@ -69,14 +69,14 @@
     }
     ```
 
-#### View All Items
+### View All Items
 - **Endpoint:** `GET /items`
 - **URL:** [http://localhost:8080/items](http://localhost:8080/items)
 
-#### View Item by ID
+### View Item by ID
 - **Endpoint:** `GET /items/{id}`
 
-#### Update Item
+### Update Item
 - **Endpoint:** `PUT /items/{id}`
 - **Request Example (cURL):**
     ```sh
@@ -103,12 +103,9 @@
     }
     ```
 
-#### Delete Item
+### Delete Item
 - **Endpoint:** `DELETE /items/{id}`
 
-#### View Items by User
+### View Items by User
 - **Endpoint:** `GET /items/user/{userId}`
 
----
-
-Feel free to adjust as needed!

@@ -1,17 +1,18 @@
 package com.revature.Project0.controllers;
 
-import com.revature.Project0.models.User;
-import com.revature.Project0.services.UserService;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Data
+import com.revature.Project0.models.User;
+import com.revature.Project0.services.UserService;
+
 @RestController
-@RequestMapping("/users")
-@CrossOrigin
+@RequestMapping("/api/users")
 public class UserController {
 
     private final UserService userService;
@@ -23,20 +24,13 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody User user) {
-        try {
-            User newUser = userService.register(user);
-            return new ResponseEntity<>(newUser, HttpStatus.CREATED);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-        }
+        User registeredUser = userService.register(user);
+        return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody User user) {
         User loggedInUser = userService.login(user.getUsername(), user.getPassword());
-        if (loggedInUser != null) {
-            return new ResponseEntity<>(loggedInUser, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(loggedInUser, HttpStatus.OK);
     }
 }

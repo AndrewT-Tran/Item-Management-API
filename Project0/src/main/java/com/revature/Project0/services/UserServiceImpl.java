@@ -1,45 +1,42 @@
 package com.revature.Project0.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import com.revature.Project0.models.User;
 import com.revature.Project0.repositories.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserRepo userRepo;
+    @Autowired
+    private UserRepo userRepo;
 
     @Autowired
-    public UserServiceImpl(UserRepo userRepo) {
-        this.userRepo = userRepo;
-    }
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public User register(User user) {
-        // Check if the username already exists
-        if (userRepo.findByUsername(user.getUsername()) != null) {
+        if (userRepo.findByUsername(user.getUsername()).isPresent()) {
             throw new IllegalArgumentException("Username already exists");
         }
-        // Save user with plain text password
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepo.save(user);
     }
 
     @Override
     public User login(String username, String password) {
-        User user = userRepo.findByUsername(username);
-        // Log or print values for debugging
-        System.out.println("Attempting login for username: " + username);
-        if (user != null) {
-            System.out.println("User found: " + user);
-            System.out.println("Stored password: " + user.getPassword());
-            System.out.println("Provided password: " + password);
-            if (user.getPassword().equals(password)) {
-                return user;
-            }
-        } else {
-            System.out.println("User not found: " + username);
+        User user = userRepo.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid username or password"));
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new IllegalArgumentException("Invalid username or password");
         }
-        return null;
+        return user;
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return userRepo.findByUsername(username).orElse(null);
     }
 }
