@@ -1,51 +1,310 @@
 # Project 0: Item Management Application
 
-* Assigned Date: 6/31/2024
-* Due Date: 8/06/2024
+## Project Overview
 
-# Description
+This project is a Spring Boot application with a PostgreSQL database backend. It provides APIs for user registration, login, and item management. Users can register, log in, create items, view items, update items, and delete items. The application uses JPA for ORM and Hibernate for the persistence layer.
 
-Using Spring Boot, create a simple API for creating and managing items. The items can be whatever you want (i.e. Collectibles, Animals, Employees, Video Games, Shoes, Clothing, etc). Your goal will be to build an API that allows you to store these items and track them as needed.
+### Technologies Used
+- **Spring Boot 3.3.2**
+  - Spring Boot Starter Web
+  - Spring Boot Starter Data JPA
+  - Spring Boot Starter Actuator
+- **Java 17**
+- **PostgreSQL**
+- **Hibernate**
+- **Mockito Core** for Unit Testing
+- **Spring Boot Starter Test**
+- **Spring Boot DevTools** for Development
+- **H2 Database** for Testing
+- **Lombok** for reducing boilerplate code
 
-## Requirements
-- Build the application using at least Java 17 and Spring Boot 3
+## Table of Contents
+- [Database Setup](#database-setup)
+- [Spring Boot Configuration](#spring-boot-configuration)
+- [Database Schema](#database-schema)
+  - [Create Tables](#create-tables)
+  - [Seed Data](#seed-data)
+- [API Endpoints](#api-endpoints)
+  - [User Operations](#user-operations)
+  - [Item Operations](#item-operations)
+- [Running the Application](#running-the-application)
+- [Testing Endpoints](#testing-endpoints)
 
-- All interactions between a User and the API should happen via HTTP Requests. Using a tool like Postman will allow you to set up these requests.
+## Database Setup
 
-- All data should be stored in a SQL Database, using an in-memory H2 database will be the easiest way to tackle this problem, though a PostgreSQL database would be ideal. Remember that we're going for persistence with a Database, so we'd likely want to either use a file for H2 or just use a PostgreSQL Database as is
+### 1. Create Database and User
 
-- The goal of this project is to learn basic application design and structure
+```sql
+CREATE DATABASE projectDB;
+CREATE USER postgres WITH ENCRYPTED PASSWORD 'password';
+GRANT ALL PRIVILEGES ON DATABASE project0 TO postgres;
+```
 
-- You'll be expected to complete 4 of the following User Stories as a **MINIMUM**. The more stories implemented the better, but make sure you have at least 4 of the following:
+## Spring Boot Configuration
 
-    - As a user, I can create a new Item
-    - As a user, I can view all Items
-    - As a user, I can view a singular Item by its ID (HINT: Use Path Params to select a Item by its ID)
-    - As a user, I can update a Item (Change the name or other properties)
-    - As a user, I can delete a Item by its ID (HINT: Use Path Params to select a Item by its ID)
-    - As a user, I can create an account to hold my Items
-    - As a user, I can login to my account (which is stored in the database)
-    - As a user, I can view the Items associated with my account
+Update the `application.properties` file in your Spring Boot application to connect to the PostgreSQL database.
 
-- Other Optional Requirements include the following:
-    - Giving accounts roles (USER and ADMIN) so Admins can view everyone's Items while a User can only view their own
-    - Using JUnit to test Service Layer methods (70% coverage at least would be optimal)
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/projectDB
+spring.jpa.properties.hibernate.default_schema=project0
+spring.datasource.username=${DB_username}
+spring.datasource.password=${DB_password}
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+```
 
-- **NOTE** Responses from the API must include proper response bodies (in JSON) and **status codes** (i.e. If I try to go to http://localhost:8080/To-Do/5 and there is no resource there, I should receive a 404 status code (NOT FOUND) in the response, but if the resource is there I should receive a 200 status code (OK) instead)
+## Database Schema
 
-## Presentation
-- Use Postman to showcase how your application handles HTTP requests and responses (A Collection on Postman is useful for presenting prewritten HTTP requests)
-- Clear, concise, and professional communication during the project presentation
-- Ability to communicate clear answers to fully address questions asked about the project
-- Logical flow to the project presentation
-- Approx. 5 Minutes in length
+### Create Tables
 
-# Frequently Asked Questions
-1. When is the project due? 
-    >A: August 6th, 2024
-2. Is there a code freeze? 
-    >A: It is recommended that you institute your own code freeze at least a day before the project presentations. However, this is a recommendation only; it will not be enforced. NOTE: The code that will be evaluated by your trainer will be the code you last pushed to your repository BEFORE the time set for project presentations. Code submitted while presentations are on-going will not be evaluated. 
-3. What happens if I break my project that was mostly working right before the due date? 
-    >A: **As you should have been regularly pushing code to your repository** you should be able to roll back to previously working version. If you have not regularly pushed your code and do not have a working commit to return to you will need to present the state of your application in its current form. 
-4. Who will be evaluating the project? 
-    >A: Your trainer will be the one providing the full evaluation of your projects. However, the QC team will also be present at presentations to ask questions about your project and consult with your trainer. 
+Create the necessary tables for the application.
+
+```sql
+-- Makes sure we are using the right schema
+SET search_path TO project0;
+
+-- Create users table
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL
+);
+
+-- Create items table
+CREATE TABLE IF NOT EXISTS items (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description TEXT NOT NULL,
+    status BOOLEAN NOT NULL,
+    user_id INT REFERENCES users(id) ON DELETE CASCADE
+);
+```
+
+### Seed Data
+
+Seed the database with initial data.
+
+```sql
+-- Insert sample users
+INSERT INTO users (username, password, email)
+VALUES
+    ('admin', 'password', 'admin@me.com'),
+    ('PGriffin', 'familyguy', 'Peter.Griffin@example.com'),
+    ('JSnow', 'Winter', 'Winter@iscomming.com'),
+    ('TKamado', 'Tanjaro', 'Tanjaro@FireBreathing.com');
+
+-- Insert sample items
+INSERT INTO items (name, description, status, user_id)
+VALUES
+    ('Laptop', 'A high-end gaming laptop', true, 1),
+    ('Smartphone', 'Latest model with great features', true, 2),
+    ('Headphones', 'Noise-cancelling over-ear headphones', false, 1),
+    ('Monitor', '27-inch 4K monitor', true, 3);
+```
+
+## API Endpoints
+
+### User Operations
+
+#### Register a User
+- **Endpoint:** `POST /users/register`
+- **Request Example (cURL):**
+    ```sh
+    curl -X POST http://localhost:8080/users/register \
+    -H "Content-Type: application/json" \
+    -d '{
+      "email": "me@yaboy.com",
+      "username": "admin",
+      "password": "password"
+    }'
+    ```
+- **Request Body:**
+    ```json
+    {
+      "email": "test@example.com",
+      "username": "testuser",
+      "password": "password"
+    }
+    ```
+
+#### Login a User
+- **Endpoint:** `POST /users/login`
+- **Request Example (cURL):**
+    ```sh
+    curl -X POST http://localhost:8080/users/login \
+    -H "Content-Type: application/json" \
+    -d '{
+      "username": "testuser",
+      "password": "password"
+    }'
+    ```
+- **Request Body:**
+    ```json
+    {
+      "username": "testuser",
+      "password": "password"
+    }
+    ```
+
+### Item Operations
+
+#### Create an Item
+- **Endpoint:** `POST /items`
+- **Request Example (cURL):**
+    ```sh
+    curl -X POST http://localhost:8080/items \
+    -H "Content-Type: application/json" \
+    -d '{
+      "name": "Sample Item",
+      "description": "This is a sample item",
+      "status": true,
+      "user": {"id": 1}
+    }'
+    ```
+- **Request Body:**
+    ```json
+    {
+      "name": "Sample Item",
+      "description": "This is a sample item",
+      "status": true,
+      "user": {
+        "id": 1
+      }
+    }
+    ```
+
+#### View All Items
+- **Endpoint:** `GET /items`
+- **URL:** [http://localhost:8080/items](http://localhost:8080/items)
+
+#### View Item by ID
+- **Endpoint:** `GET /items/{id}`
+
+#### Update Item
+- **Endpoint:** `PUT /items/{id}`
+- **Request Example (cURL):**
+    ```sh
+    curl -X PUT http://localhost:8080/items/1 \
+    -H "Content-Type: application/json" \
+    -d '{
+      "name": "Updated Item Name",
+      "description": "Updated Description",
+      "status": true,
+      "user": {
+        "id": 1
+      }
+    }'
+    ```
+- **Request Body:**
+    ```json
+    {
+      "name": "Updated Item Name",
+      "description": "Updated Description",
+      "status": true,
+      "user": {
+        "id": 1
+      }
+    }
+    ```
+
+#### Delete Item
+- **Endpoint:** `DELETE /items/{id}`
+
+#### View Items by User
+- **Endpoint:** `GET /items/user/{userId}`
+
+## Running the Application
+
+### Build and Package the Application
+
+```sh
+mvn clean package -Dspring-boot.run.arguments="--DB_username=postgres --DB_password=password"
+```
+
+### Set Environment Variables
+
+```sh
+export DB_username="postgres"
+export DB_password="password"
+```
+
+### Run the Application
+
+```sh
+java -jar target/Project0-0.0.1-SNAPSHOT.jar
+```
+
+## Testing Endpoints
+
+### Register a User
+- **Endpoint:** `POST http://localhost:8080/users/register`
+- **Request Example (cURL):**
+    ```sh
+    curl -X POST http://localhost:8080/users/register \
+    -H "Content-Type: application/json" \
+    -d '{
+      "email": "test@example.com",
+      "username": "testuser",
+      "password": "password"
+    }'
+    ```
+
+### Login a User
+- **Endpoint:** `POST http://localhost:8080/users/login`
+- **Request Example (cURL):**
+    ```sh
+    curl -X POST http://localhost:8080/users/login \
+    -H "Content-Type: application/json" \
+    -d '{
+      "username": "testuser",
+      "password": "password"
+    }'
+    ```
+
+### Create an Item
+- **Endpoint:** `POST http://localhost:8080/items`
+- **Request Example (cURL):**
+    ```sh
+    curl -X POST http://localhost:8080/items \
+    -H "Content-Type: application/json" \
+    -d '{
+      "name": "Sample Item",
+      "description": "This is a sample item",
+      "status": true,
+      "user": {"id": 1}
+    }'
+    ```
+
+### View All Items
+- **Endpoint:** `GET http://localhost:8080/items`
+- **URL:** [http://localhost:8080/items](http://localhost:8080/items)
+
+### View Item by ID
+- **Endpoint:** `GET http://localhost:8080/items/{id}`
+
+### Update Item
+- **Endpoint:** `PUT http://localhost:8080/items/{id}`
+- **Request Example (cURL):**
+    ```sh
+    curl -X PUT http://localhost:8080/items/1 \
+    -H "Content-Type: application/json" \
+    -d '{
+      "name": "Updated Item Name",
+      "description": "Updated Description",
+      "status": true,
+      "user": {
+        "id": 1
+      }
+    }'
+    ```
+
+### Delete Item
+- **Endpoint:** `DELETE http://localhost:8080/items/{id}`
+
+### View Items by User
+- **Endpoint:** `GET http://localhost:8080/items/user/{userId}`
+
+---
+
